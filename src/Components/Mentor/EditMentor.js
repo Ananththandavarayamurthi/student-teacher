@@ -1,0 +1,138 @@
+import React from "react";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import { useFormik } from "formik";
+import { useNavigate, useParams } from "react-router-dom";
+import * as yup from "yup";
+import { useEffect } from "react";
+import { useState } from "react";
+import Form from "react-bootstrap/Form";
+
+const DataValidationSchema = yup.object({
+  id: yup.number().required(),
+  name: yup.string().required().min(4),
+  gender:yup.string().required().min(4),
+  email: yup.string().email().required().min(8),
+  img: yup.string().required().min(8),
+  subject: yup.string().required().min(1),
+});
+export const EditMentor = () => {
+  const [data, setData] = useState(null);
+  const { id } = useParams();
+  useEffect(() => {
+    fetch(`https://6354ef52483f5d2df3a96755.mockapi.io/mentor/${id}`, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((data) => setData(data));
+  }, [id]);
+
+  return <div>{data ? <EditMentorForm data={data} /> : "Loading"}</div>;
+};
+
+const EditMentorForm = ({ data }) => {
+  const navigate = useNavigate();
+  const { handleBlur, handleChange, values, handleSubmit, touched, errors } =
+    useFormik({
+      initialValues: {
+        id: data.id,
+        name: data.name,
+        gender:data.gender,
+        email: data.email,
+        img: data.img,
+        subject: data.subject,
+      },
+      validationSchema: DataValidationSchema,
+      onSubmit: (updateValues) => {
+        console.log("value", updateValues);
+        EditData(updateValues);
+      },
+    });
+  const EditData = (updateValues) => {
+    fetch(`https://6354ef52483f5d2df3a96755.mockapi.io/mentor/${data.id}`, {
+      method: "PUT",
+      body: JSON.stringify(updateValues),
+      headers: { "Content-type": "application/json" },
+    }).then(() => navigate("/teacher"));
+  };
+
+  return (
+    <section className="container my-5">
+      <h2 className="text-center mt-3">Edit Mentor Details</h2>
+      <Form onSubmit={handleSubmit} className="add-student">
+        <TextField
+          label="Mentor-Id"
+          variant="outlined"
+          type="number"
+          value={values.id}
+          name="id"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.id && errors.id}
+          helperText={touched.id && errors.id ? errors.id : null}
+        />
+        <TextField
+          label="Name"
+          variant="outlined"
+          type="text"
+          value={values.name}
+          name="name"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.name && errors.name}
+          helperText={touched.name && errors.name ? errors.name : null}
+        />
+         <TextField
+          label="gander"
+          variant="outlined"
+          type="text"
+          value={values.gender}
+          name="gender"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.gender && errors.gender}
+          helperText={touched.gender && errors.gender ? errors.gender : null}
+        />
+        <TextField
+          label="Email"
+          variant="outlined"
+          type="email"
+          value={values.email}
+          name="email"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.email && errors.email}
+          helperText={touched.email && errors.email ? errors.email : null}
+        />
+        <TextField
+          label="Mentor Image"
+          variant="outlined"
+          type="text"
+          value={values.img}
+          name="pic"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.img && errors.img}
+          helperText={touched.img && errors.img ? errors.img : null}
+        />
+        <TextField
+          label="subject Mark"
+          variant="outlined"
+          type="text"
+          value={values.subject}
+          name="subject"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.subject && errors.subject}
+          helperText={touched.subject && errors.subject ? errors.subject : null}
+        />
+        <Button variant="contained" type="submit">
+          Update Mentor Details
+        </Button>
+      </Form>
+      <button className="btn btn-primary mt-3" onClick={() => navigate(-1)}>
+        Back
+      </button>
+    </section>
+  );
+};
