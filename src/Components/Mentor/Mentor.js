@@ -27,7 +27,12 @@ const Mentor = () => {
   };
   return (
     <div>
-      <div className="button d-flex my-5">
+      
+      <NavBar />
+      <div className="container my-3">
+        <h2 className="text-center my-3">Mentor Details</h2>
+        <div className="d-flex align-content-start flex-wrap m-2 ">
+        <div className="button d-flex my-5">
           <Button
             variant="dark"
             className="col-6"
@@ -36,10 +41,6 @@ const Mentor = () => {
             Add New Mentor
           </Button>
         </div>
-      <NavBar />
-      <div className="container my-3">
-        <h2 className="text-center my-3">Mentor Details</h2>
-        <div className="d-flex align-content-start flex-wrap m-2 ">
       {mentorData.map((data,index)=>(<Card className="m-2"style={{ width: '18rem' }} key={index}>
       <Card.Img variant="top" src={data.img} />
       <Card.Body>
