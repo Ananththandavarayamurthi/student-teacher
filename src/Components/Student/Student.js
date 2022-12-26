@@ -30,7 +30,14 @@ const Student = () => {
   };
 
   return (
-    <div>
+        
+        
+        <div>
+       <div className="button d-flex">
+        <Button variant="dark" className="col-6" onClick={()=>navigate('/addstudent')}>
+              Add New Student
+        </Button>
+      </div>
       <NavBar />
       <h2 className="text-center mt-3">Student List</h2>
       <div className="d-flex align-content-start flex-wrap m-2 ">
@@ -61,11 +68,7 @@ const Student = () => {
     </Card>))}
         
       </div>
-      <div className="button d-flex">
-        <Button variant="dark" className="col-6" onClick={()=>navigate('/addstudent')}>
-              Add New Student
-        </Button>
-      </div>
+     
     </div>
   );
 };

@@ -27,6 +27,15 @@ const Mentor = () => {
   };
   return (
     <div>
+      <div className="button d-flex my-5">
+          <Button
+            variant="dark"
+            className="col-6"
+            onClick={() => navigate("/addmentor")}
+          >
+            Add New Mentor
+          </Button>
+        </div>
       <NavBar />
       <div className="container my-3">
         <h2 className="text-center my-3">Mentor Details</h2>
