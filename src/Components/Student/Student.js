@@ -36,12 +36,13 @@ const Student = () => {
        
       <NavBar />
       <h2 className="text-center mt-3">Student List</h2>
-      <div className="d-flex align-content-start flex-wrap m-2 ">
       <div className="button d-flex">
         <Button variant="dark" className="col-6" onClick={()=>navigate('/addstudent')}>
               Add New Student
         </Button>
       </div>
+      <div className="d-flex align-content-start flex-wrap m-2 ">
+     
       {studentData.map((data,index)=>(<Card className="m-2"style={{ width: '18rem' }} key={index}>
       <Card.Img variant="top" src={data.avatar} />
       <Card.Body>
